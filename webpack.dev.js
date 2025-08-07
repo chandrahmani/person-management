@@ -13,5 +13,11 @@ module.exports = merge(common, {
     hot: true, // Enable Hot Module Replacement (HMR)
     compress: true,
     port: 3000,
+    	proxy: [
+			{
+				context: ['/api'],
+				target: 'http://localhost:3003',
+			},
+		],
   },
 });
