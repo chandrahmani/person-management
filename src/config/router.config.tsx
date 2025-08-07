@@ -4,7 +4,11 @@ import About from "../views/About";
 import { Home, Settings } from "../views/Dashboard";
 import Landing from "../views/Landing/Landing";
 import Contact from "../views/Contact";
-import Profile from "../views/Dashboard/Profile";
+// import Profile from "../views/Dashboard/Profile";
+import Login from "@/views/Login/Login";
+import Products from "@/views/NavigatorInfo/NavigatorInfo";
+// import Products from "@/views/Products/Products";
+
 
 
 export const configureRoute = (routes: ROUTE[]) => {
@@ -26,16 +30,28 @@ export const MAIN_ROUTES: ROUTE[] = [
 		element: <Landing />,
 	},
 	{
-		path: '/about',
-		title: "About",
-		name: 'about',
-		element: <About />,
-	},
-	{
 		path: '/contact',
 		title: "Contact Us",
 		name: 'contact',
 		element: <Contact />,
+	},
+		{
+		path: '/about',
+		title: "About Us",
+		name: 'about',
+		element: <About />,
+	},
+		{
+		path: '/products',
+		title: "Products",
+		name: 'products',
+		element: <Products />,
+	},
+	{
+		path: "/login",
+		title:"Login",
+		name:"login",
+		element:<Login />
 	}
 ]
 
@@ -54,10 +70,10 @@ export const DASHBOARD_NESTED_ROUTES: ROUTE[] = [
 		name: 'settings',
 		element: <Settings />,
 	},
-	{
-		path: 'profile',
-		title: "My Profile",
-		name: 'profile',
-		element: <Profile />
-	}
+	// {
+	// 	path: 'profile',
+	// 	title: "My Profile",
+	// 	name: 'profile',
+	// 	element: <Profile />
+	// }
 ]
