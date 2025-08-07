@@ -34,3 +34,29 @@ export const createTodo = async (
   }
 };
 
+ export const fetchProfile = async (token: string) => {
+    try {
+      const response = await axios.get('/api/auth/profile', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      console.log({ response });
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+      
+      return {
+        error:
+          typeof error === 'object' && error !== null && 'message' in error
+            ? String((error as { message?: unknown }).message)
+            : 'Unknown error',
+      };
+    }
+  };
+
+
