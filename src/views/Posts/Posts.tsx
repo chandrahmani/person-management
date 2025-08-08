@@ -1,6 +1,4 @@
-import { useAuth } from '@/store/AuthProvider';
-import { UserProfileType } from '@/types';
-import { Alert, Box, Button, Card, CardContent, Container, Paper, Stack, TextField, Typography } from '@mui/material';
+import { Button, Card, CardContent, Container,  Stack, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
