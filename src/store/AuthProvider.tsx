@@ -45,11 +45,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
-      if (!token) {
-      navigate("/login");
+      if (!token ) {
+        return
     } else if (isTokenExpired(token)) {
       localStorage.removeItem('token');
-      setToken(null);
+      setToken(null );
       navigate("/login");
     }
   },[token , navigate]);
