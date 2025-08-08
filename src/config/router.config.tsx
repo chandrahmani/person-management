@@ -7,6 +7,7 @@ import Contact from "../views/Contact";
 // import Profile from "../views/Dashboard/Profile";
 import Login from "@/views/Login/Login";
 import Products from "@/views/NavigatorInfo/NavigatorInfo";
+import Posts from "@/views/Posts/Posts";
 // import Products from "@/views/Products/Products";
 
 
@@ -52,6 +53,12 @@ export const MAIN_ROUTES: ROUTE[] = [
 		title:"Login",
 		name:"login",
 		element:<Login />
+	},
+	{
+		path: "/posts",
+		title: "Posts",
+		name: "posts",
+		element: <Posts />
 	}
 ]
 

@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw'
  
 import meJSON from './data/me.json'
+import post from './data/posts.json'
 
 
 export const handlers = [
@@ -9,6 +10,20 @@ export const handlers = [
     // ...and respond to them using this JSON response.
     return HttpResponse.json(meJSON)
   }),
+  
+  http.get('/api/posts' , () => {
+    return HttpResponse.json(post)
+  }),
+
+  http.post('/api/posts', async ({request}) => {
+    const body = await request.json() as Record<string, any>
+    post.push({
+      ...body, id: post.length + 1,
+      title: '',
+      content: ''
+    })
+    return HttpResponse.json(body)
+  })
 
   // http.get('/api/auth/profile', () => {
   //   return HttpResponse.json(meJSON)
