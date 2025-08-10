@@ -20,7 +20,8 @@ export const handlers = [
     post.push({
       ...body, id: post.length + 1,
       title: '',
-      content: ''
+      content: '',
+      imageUrl: ''
     })
     return HttpResponse.json(body)
   })

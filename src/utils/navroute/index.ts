@@ -12,11 +12,6 @@ export const routenave: ROUTE = () => [
         name: 'panel'
     },
     {
-        path: '/login',
-        title: "Login",
-        name: 'login'
-    },
-    {
         path: '/userlist',
         title: "UserList",
         name: 'userlist',
