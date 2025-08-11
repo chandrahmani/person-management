@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Container,  Stack, TextField, Typography } from '@mui/material';
+import { Button, Card, CardContent, Container,  Stack, TableCell, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -6,8 +6,6 @@ interface Post {
   id: number;
   title: string;
   content: string;
-  imageUrl?: string;
-
 }
 
 const  Posts = () => {
@@ -31,7 +29,13 @@ const  Posts = () => {
       return;
     }
 
-    axios.post('/api/posts', { title, content })
+    const newPost: Post = {
+      id: posts.length + 1, // Simple ID generation
+      title,
+      content
+    }
+
+    axios.post('/api/posts', newPost)
       .then(response => {
         setPosts(prevPosts => [...prevPosts, response.data]);
         setTitle('');
@@ -40,6 +44,28 @@ const  Posts = () => {
       .catch(error => {
         console.error('Error adding post:', error);
       });
+  }
+
+  const handleDeletePost = (id:number) => {
+    if (!window.confirm('Are you sure you want to delete this post?')) {
+      return;
+    }
+    axios.delete(`/api/posts/${id}`)
+      .then(() => {
+        setPosts(prevPosts => prevPosts.filter(post => post.id !== id));
+      })
+      .catch(error => {
+        console.error('Error deleting post:', error);
+      });
+  }
+
+  const handleEditePost = (id: number) => {
+    const postEdit = posts.find(post => post.id === id)
+    if(!postEdit){
+      alert('Post not found')
+    }
+    setTitle(postEdit?.title || '');
+
   }
 
   return (
@@ -72,9 +98,18 @@ const  Posts = () => {
           <Card key={post.id}>
             <CardContent>
               <Typography variant="h6">{post.title}</Typography>
-              <Typography variant="subtitle1" color="textSecondary">Posted on {new Date(post.id).toLocaleDateString()}</Typography>
               <Typography variant="body2">{post.content}</Typography>
 
+              <TableCell>
+                <Stack direction="row" spacing={1}>
+                  <Button variant='outlined' onClick={() => handleEditePost(post.id)}>
+                    Edit
+                  </Button>
+                  <Button variant='outlined' onClick={() => handleDeletePost(post.id)}>
+                    Delete
+                  </Button>
+                </Stack>
+              </TableCell>
             </CardContent>
           </Card>
         ))}
