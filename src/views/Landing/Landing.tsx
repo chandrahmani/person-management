@@ -1,19 +1,17 @@
 import { FC } from 'react';
-import {Box} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 
 
 const Landing: FC = () => {
   return (
     <Box
       sx={{
-        width: 300,
+        width: '100%',
         margin: 'auto',
-        mt: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-      }}
-    >
+      }}>
+      <Typography variant="h3" align="center">
+        Welcome To The Landing Page
+      </Typography>  
     </Box>
   );
 };

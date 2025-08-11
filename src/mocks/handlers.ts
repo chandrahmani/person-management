@@ -20,11 +20,10 @@ export const handlers = [
     post.push({
       ...body, id: post.length + 1,
       title: '',
-      content: '',
-      imageUrl: ''
+      content: ''
     })
     return HttpResponse.json(body)
-  })
+  }),
 
   // http.get('/api/auth/profile', () => {
   //   return HttpResponse.json(meJSON)

@@ -3,6 +3,7 @@ import { Alert, Box, Button, Input, Typography } from '@mui/material';
 import axios from 'axios';
 import { useAuth } from '@/store/AuthProvider';
 import { useNavigate } from 'react-router';
+import { loginUser } from '@/services/app.services';
 
 
 const Login: FC = () => {
@@ -14,28 +15,22 @@ const Login: FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const payload = {
-      username: formData.get('username'),
-      password: formData.get('password'),
-    };
-    try {
-      const response = await axios.post('/api/auth/login', payload , { timeout: 1000 });
 
-      if (response.data && response.data.access_token) {
-        localStorage.setItem('token', response.data.access_token);
-        setToken(response.data.access_token);
+    const username = String(formData.get('username'));
+    const password = String(formData.get('password'));
+    try {
+      const response = await loginUser(username, password);
+      if (response.access_token) {
+        localStorage.setItem('token', response.access_token);
+        localStorage.setItem('username', username);
+        setToken(response.access_token);
         navigate('/panel');
       } else {
-        
         setError('No token received, please try again.');
       }
-      console.log('Response:', response.data.data);
     } catch (error) {
-      console.error('Error during form submission:', error);
       if (axios.isAxiosError(error) && error.response) {
         setError(error.response.statusText || 'Failed Login Try Again');
-      } else {
-        setError('Failed Login Try Again');
       }
     }
   };

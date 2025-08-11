@@ -1,4 +1,4 @@
-import { fetchProfile } from '@/services/app.services';
+import { getProfile } from '@/services/app.services';
 import { useAuth } from '@/store/AuthProvider';
 import { UserProfileType } from '@/types';
 import { Alert, Box, Container, Paper, Typography } from '@mui/material';
@@ -9,20 +9,23 @@ const  Panel = () => {
   const [error, setError] = useState<string | null>(null);
   const { token } = useAuth()
 
-
   useEffect(() => {
     if (!token) {
       setError('No authentication token found');
-      setProfile(null);
       return;
     }
-    fetchProfile(token).then((data) => {
-      if (data) {
+    const fetchData = async () => {
+      setError(null);
+      try {
+        const data = await getProfile(token); // call API from services
         setProfile(data);
-      } else {
-        setError('Failed to fetch profile');
+      } catch (err) {
+        console.error('Error fetching profile:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
       }
-    });
+    };
+
+    fetchData();
   }, [token]);
 
   return (

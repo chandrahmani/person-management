@@ -14,7 +14,6 @@ const  Posts = () => {
   const [posts , setPosts] = useState<Post[]>([]);
    const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [imageUrl , setImageUrl] = useState('')
 
   useEffect(() => {
     axios.get('/api/posts')
@@ -55,15 +54,6 @@ const  Posts = () => {
           onChange={e => setTitle(e.target.value)}
           fullWidth
         />
-        <TextField
-          label="Image URL"
-          value={imageUrl}
-          onChange={e => setImageUrl(e.target.value)}
-          fullWidth
-        />
-
-        
-
           <TextField
           label="Content"
           value={content}
@@ -82,7 +72,6 @@ const  Posts = () => {
           <Card key={post.id}>
             <CardContent>
               <Typography variant="h6">{post.title}</Typography>
-              {post.imageUrl && <img src={post.imageUrl} alt={post.title} style={{ width: '100%', height: 'auto' }} />}
               <Typography variant="subtitle1" color="textSecondary">Posted on {new Date(post.id).toLocaleDateString()}</Typography>
               <Typography variant="body2">{post.content}</Typography>
 
