@@ -37,19 +37,35 @@ export default function Navigation() {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
         RTW
       </Typography>
       <Divider />
       <List>
-        {navItems.map(({ path, title, name }) => (
-          <ListItem key={name}>
-            <Link key={name} to={path}>
-              {title}
-            </Link>
+        {navItems.map(({ path, title, name }) =>
+          token && name === 'login' ? null : (
+            <ListItem key={name} onClick={handleDrawerToggle}>
+              <Link
+                to={path}
+                style={{
+                  textDecoration: 'none',
+                  fontSize: '18px',
+                  color: 'inherit',
+                }}
+              >
+                {title}
+              </Link>
+            </ListItem>
+          ),
+        )}
+        {token && (
+          <ListItem>
+            <Button fullWidth onClick={handleLogout}>
+              Logout
+            </Button>
           </ListItem>
-        ))}
+        )}
       </List>
     </Box>
   );
@@ -94,11 +110,11 @@ export default function Navigation() {
             )}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            {token ? (
+            {token && (
               <Button style={{ textDecoration: 'none', color: '#fff' }} onClick={handleLogout}>
                 Logout
               </Button>
-            ) : null}
+            )}
           </Box>
         </Toolbar>
       </AppBar>
