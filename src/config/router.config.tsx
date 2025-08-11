@@ -53,12 +53,6 @@ export const MAIN_ROUTES: ROUTE[] = [
 		title:"Login",
 		name:"login",
 		element:<Login />
-	},
-	{
-		path: "/posts",
-		title: "Posts",
-		name: "posts",
-		element: <Posts />
 	}
 ]
 

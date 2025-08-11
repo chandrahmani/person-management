@@ -13,7 +13,12 @@ export const routenave: ROUTE = () => [
     },
     {
         path: '/userlist',
-        title: "UserList",
+        title: 'UserList',
         name: 'userlist',
     },
+    {
+        path: '/posts',
+        title: 'Posts',
+        name: 'posts',
+    }
 ]
