@@ -1,5 +1,4 @@
 import { http, HttpResponse } from 'msw'
- 
 import meJSON from './data/me.json'
 import post from './data/posts.json'
 

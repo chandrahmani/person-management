@@ -13,8 +13,7 @@ import DashboardLayout from './layout/DashboardLayout'
 import Products from './views/NavigatorInfo/NavigatorInfo'
 import Posts from './views/Posts/Posts'
 
-
-export default function Root() {
+	export default function Root() {
 	return (
 		<main>
 			<BrowserRouter>

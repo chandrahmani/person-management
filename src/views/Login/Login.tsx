@@ -37,13 +37,10 @@ const Login: FC = () => {
 
   return (
     <Box
-      sx={{
-        width: 300,
+         sx={{
+        height: "80vh",
         margin: 'auto',
-        mt: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
+        width:'400px',
       }}
     >
       <Typography variant="h3">Sign In</Typography>
@@ -55,7 +52,7 @@ const Login: FC = () => {
       ) : null}
 
       <form onSubmit={handleSubmit}>
-        <Box display="flex" flexDirection="column">
+        <Box display="flex" flexDirection="column" sx={{ width: '100%', gap: 1, mt: 1 }}>
           <Input
             type="text"
             placeholder="User Name"
@@ -63,6 +60,12 @@ const Login: FC = () => {
             name="username"
             required
             fullWidth
+            sx={
+              {
+                color:'black',
+                fontWeight:'900',
+              }
+            }
           />
           <br />
           <Input
@@ -72,12 +75,18 @@ const Login: FC = () => {
             name="password"
             required
             fullWidth
+              sx={
+              {
+                color:'black',
+                fontWeight:'900',
+              }
+            }
           />
           <br />
           {localStorage.getItem('token') ? (
             <Typography variant="body1">{localStorage.getItem('username')}</Typography>
           ) : null}
-          <Button type="submit" fullWidth color="secondary" sx={{ bgcolor: 'grey' }}>
+          <Button type="submit" fullWidth color="secondary" sx={{ bgcolor: '#4f8cff', "&:hover": { bgcolor: "#3a6edc" }, borderRadius: 2, textTransform: "none", fontSize: "1rem", py: 1 }}>
             Login
           </Button>
         </Box>
