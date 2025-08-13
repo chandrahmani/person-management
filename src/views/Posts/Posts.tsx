@@ -62,14 +62,14 @@ const Posts = () => {
 
   const handleEditPost = async (id: number) => {
 
-   const postToEdit = posts.find((p) => p.id === id);
+    const postToEdit = posts.find((p) => p.id === id);
     if (!postToEdit) return;
     setEditPostId(id);
     setTitle(postToEdit.title);
     setContent(postToEdit.content);
   }
 
-    const handleUpdatePost = () => {
+  const handleUpdatePost = () => {
     if (!title || !content || editPostId === null) {
       alert('Title and content cannot be empty');
       return;
@@ -113,34 +113,19 @@ const Posts = () => {
           rows={3}
           fullWidth
         />
-        <Button variant="contained" onClick={handleAddPost}>
-          Add Post
-        </Button>
-      </Stack>
 
-      {
-        editPostId && (
-          <form>
-            <TextField
-              label="Edit Title"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-              fullWidth
-            />
-            <TextField
-              label="Edit Content"
-              value={content}
-              onChange={e => setContent(e.target.value)}
-              multiline
-              rows={3}
-              fullWidth
-            />
-            <Button variant="contained" onClick={() => handleUpdatePost()}>
-              Save Changes
+        {
+          editPostId ? (
+            <Button variant="contained" onClick={handleUpdatePost}>
+              Update Post
             </Button>
-          </form>
-        )
-      }
+          ) : (
+            <Button variant="contained" onClick={handleAddPost}>
+              Add Post
+            </Button>
+          )
+        }
+      </Stack>
 
       <Stack spacing={2}>
         {posts.map(post => (
@@ -168,7 +153,3 @@ const Posts = () => {
 }
 
 export default Posts;
-
-function setItems(arg0: any) {
-  throw new Error('Function not implemented.');
-}
