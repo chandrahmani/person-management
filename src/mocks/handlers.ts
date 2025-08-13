@@ -28,6 +28,21 @@ export const handlers = [
     return HttpResponse.json({ message: 'Post deleted successfully' })
   }),
 
+  http.put('/api/posts/:id', async ({params, request}) => {
+    const idParam = Array.isArray(params.id) ? params.id[0] : params.id
+    if (typeof idParam !== 'string') {
+      return HttpResponse.json({ error: 'Invalid post id' }, { status: 400 })
+    }
+    const postId = parseInt(idParam, 10)
+    const postIndex = post.findIndex(p => p.id == postId)
+    if (postIndex === -1) {
+      return HttpResponse.json({ error: 'Post not found' }, { status: 404 })
+    }
+    const body = await request.json() as Record<string, any>
+    post[postIndex] = { ...post[postIndex], ...body }
+    return HttpResponse.json(post[postIndex])
+  }),
+
   http.post('/api/posts', async ({request}) => {
     const body = await request.json() as Record<string, any>
     post.push({

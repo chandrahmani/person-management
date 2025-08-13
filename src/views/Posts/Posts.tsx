@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Container,  Stack, TableCell, TextField, Typography } from '@mui/material';
+import { Button, Card, CardContent, Container, Stack, TableCell, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -8,10 +8,11 @@ interface Post {
   content: string;
 }
 
-const  Posts = () => {
-  const [posts , setPosts] = useState<Post[]>([]);
-   const [title, setTitle] = useState('');
+const Posts = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [editPostId, setEditPostId] = useState<number | null>(null)
 
   useEffect(() => {
     axios.get('/api/posts')
@@ -46,7 +47,7 @@ const  Posts = () => {
       });
   }
 
-  const handleDeletePost = (id:number) => {
+  const handleDeletePost = (id: number) => {
     if (!window.confirm('Are you sure you want to delete this post?')) {
       return;
     }
@@ -59,13 +60,37 @@ const  Posts = () => {
       });
   }
 
-  const handleEditePost = (id: number) => {
-    const postEdit = posts.find(post => post.id === id)
-    if(!postEdit){
-      alert('Post not found')
-    }
-    setTitle(postEdit?.title || '');
+  const handleEditPost = async (id: number) => {
 
+   const postToEdit = posts.find((p) => p.id === id);
+    if (!postToEdit) return;
+    setEditPostId(id);
+    setTitle(postToEdit.title);
+    setContent(postToEdit.content);
+  }
+
+    const handleUpdatePost = () => {
+    if (!title || !content || editPostId === null) {
+      alert('Title and content cannot be empty');
+      return;
+    }
+
+    const updatedPost: Post = {
+      id: editPostId,
+      title,
+      content
+    }
+
+    axios.put(`/api/posts/${editPostId}`, updatedPost)
+      .then(response => {
+        setPosts(prevPosts => prevPosts.map(post => post.id === editPostId ? response.data : post));
+        setEditPostId(null);
+        setTitle('');
+        setContent('');
+      })
+      .catch(error => {
+        console.error('Error updating post:', error);
+      });
   }
 
   return (
@@ -80,7 +105,7 @@ const  Posts = () => {
           onChange={e => setTitle(e.target.value)}
           fullWidth
         />
-          <TextField
+        <TextField
           label="Content"
           value={content}
           onChange={e => setContent(e.target.value)}
@@ -93,6 +118,30 @@ const  Posts = () => {
         </Button>
       </Stack>
 
+      {
+        editPostId && (
+          <form>
+            <TextField
+              label="Edit Title"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+              fullWidth
+            />
+            <TextField
+              label="Edit Content"
+              value={content}
+              onChange={e => setContent(e.target.value)}
+              multiline
+              rows={3}
+              fullWidth
+            />
+            <Button variant="contained" onClick={() => handleUpdatePost()}>
+              Save Changes
+            </Button>
+          </form>
+        )
+      }
+
       <Stack spacing={2}>
         {posts.map(post => (
           <Card key={post.id}>
@@ -102,7 +151,7 @@ const  Posts = () => {
 
               <TableCell>
                 <Stack direction="row" spacing={1}>
-                  <Button variant='outlined' onClick={() => handleEditePost(post.id)}>
+                  <Button variant='outlined' onClick={() => handleEditPost(post.id)}>
                     Edit
                   </Button>
                   <Button variant='outlined' onClick={() => handleDeletePost(post.id)}>
@@ -119,4 +168,7 @@ const  Posts = () => {
 }
 
 export default Posts;
- 
+
+function setItems(arg0: any) {
+  throw new Error('Function not implemented.');
+}
