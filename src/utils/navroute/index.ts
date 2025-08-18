@@ -12,13 +12,13 @@ export const routenave: ROUTE = () => [
         name: 'panel'
     },
     {
-        path: '/login',
-        title: "Login",
-        name: 'login'
-    },
-    {
         path: '/userlist',
-        title: "UserList",
+        title: 'UserList',
         name: 'userlist',
     },
+    {
+        path: '/posts',
+        title: 'Posts',
+        name: 'posts',
+    }
 ]

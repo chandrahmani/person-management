@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
-import { Alert, Box, Button, Input, Typography } from '@mui/material';
+import { Alert, Box, Button, Checkbox, Divider, FormControl, FormControlLabel, FormLabel, Input, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useAuth } from '@/store/AuthProvider';
 import { useNavigate } from 'react-router';
+import { loginUser } from '@/services/app.services';
 
 
 const Login: FC = () => {
@@ -14,79 +15,92 @@ const Login: FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const payload = {
-      username: formData.get('username'),
-      password: formData.get('password'),
-    };
-    try {
-      const response = await axios.post('/api/auth/login', payload , { timeout: 1000 });
 
-      if (response.data && response.data.access_token) {
-        localStorage.setItem('token', response.data.access_token);
-        setToken(response.data.access_token);
+    const username = String(formData.get('username'));
+    const password = String(formData.get('password'));
+    try {
+      const response = await loginUser(username, password);
+      if (response.access_token) {
+        localStorage.setItem('token', response.access_token);
+        localStorage.setItem('username', username);
+        setToken(response.access_token);
         navigate('/panel');
       } else {
-        
         setError('No token received, please try again.');
       }
-      console.log('Response:', response.data.data);
     } catch (error) {
-      console.error('Error during form submission:', error);
       if (axios.isAxiosError(error) && error.response) {
         setError(error.response.statusText || 'Failed Login Try Again');
-      } else {
-        setError('Failed Login Try Again');
       }
     }
   };
 
   return (
     <Box
-      sx={{
-        width: 300,
+         sx={{
+        height: "80vh",
         margin: 'auto',
-        mt: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
+        width:'400px',
       }}
     >
-      <Typography variant="h3">Sign In</Typography>
-
+      <Typography variant="h4" sx={{pt:"2rem"}}>Login In</Typography>
       {error ? (
         <Alert severity="error" variant="outlined">
           {error}
         </Alert>
       ) : null}
 
-      <form onSubmit={handleSubmit}>
-        <Box display="flex" flexDirection="column">
-          <Input
-            type="text"
-            placeholder="User Name"
-            id="username"
-            name="username"
-            required
-            fullWidth
-          />
-          <br />
-          <Input
-            type="password"
-            placeholder="Password"
-            id="password"
-            name="password"
-            required
-            fullWidth
-          />
-          <br />
-          {localStorage.getItem('token') ? (
+       <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              gap: 2,
+              background: "#e2e0e0ff",
+              borderRadius :"5px",
+              p: '2rem',
+              mt: "2rem"
+            }}
+          >
+            <FormControl>
+              <FormLabel htmlFor="username">User Name</FormLabel>
+              <TextField
+                id="username"
+                type="username"
+                name="username"
+                placeholder="username"
+                autoComplete="username"
+                autoFocus
+                required
+                fullWidth
+                variant="outlined"
+                // color={emailError ? 'error' : 'primary'}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="password">Password</FormLabel>
+              <TextField
+                name="password"
+                placeholder="••••••"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                autoFocus
+                required
+                fullWidth
+                variant="outlined"
+              />
+            </FormControl>
+           {localStorage.getItem('token') ? (
             <Typography variant="body1">{localStorage.getItem('username')}</Typography>
           ) : null}
-          <Button type="submit" fullWidth color="secondary" sx={{ bgcolor: 'grey' }}>
+          <Button type="submit" fullWidth color="secondary" sx={{ bgcolor: '#4f8cff', "&:hover": { bgcolor: "#3a6edc" }, borderRadius: 2, textTransform: "none", fontSize: "1rem", py: 1 }}>
             Login
           </Button>
-        </Box>
-      </form>
+          </Box>
     </Box>
   );
 };

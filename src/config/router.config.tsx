@@ -31,13 +31,13 @@ export const MAIN_ROUTES: ROUTE[] = [
 	},
 	{
 		path: '/contact',
-		title: "Contact Us",
+		title: "",
 		name: 'contact',
 		element: <Contact />,
 	},
 		{
 		path: '/about',
-		title: "About Us",
+		title: "",
 		name: 'about',
 		element: <About />,
 	},

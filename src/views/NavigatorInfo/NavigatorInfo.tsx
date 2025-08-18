@@ -20,7 +20,7 @@ const getNavigatorInfo = () => ({
 
 
   return (
-    <Card sx={{ maxWidth: 345, margin: 'auto', mt: 5 }}>
+    <Card sx={{ maxWidth: 345, margin: 'auto', mt: 0 }}>
       <CardContent>
         <Typography>
           Navigator Information

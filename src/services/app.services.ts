@@ -1,3 +1,4 @@
+import { UserProfileType } from "@/types";
 import axios from "axios";
 
 
@@ -33,4 +34,24 @@ export const createTodo = async (
     return { data: null, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 };
+
+
+// create a login api method with axios
+export const loginUser = async (username: string, password: string) => {
+  const payload = { username, password };
+  const response = await axios.post('/api/auth/login', payload, { timeout: 1000 });
+  return response.data;
+};
+
+// create a fetch profile api method with axios
+ export const getProfile = async (token: string): Promise<UserProfileType> => {
+  const response = await axios.get('/api/auth/profile', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
+
 

@@ -1,7 +1,7 @@
 import {  useState, ReactNode, useEffect, createContext, useContext } from 'react'
 import { useNavigate } from 'react-router'
 
-// Helper function to check if JWT token is expired
+
 function isTokenExpired(token: string): boolean {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
@@ -45,11 +45,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
-      if (!token) {
-      navigate("/login");
+      if (!token ) {
+        return
     } else if (isTokenExpired(token)) {
       localStorage.removeItem('token');
-      setToken(null);
+      setToken(null );
       navigate("/login");
     }
   },[token , navigate]);

@@ -1,7 +1,7 @@
+import { getProfile } from '@/services/app.services';
 import { useAuth } from '@/store/AuthProvider';
 import { UserProfileType } from '@/types';
 import { Alert, Box, Container, Paper, Typography } from '@mui/material';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const  Panel = () => {
@@ -9,31 +9,23 @@ const  Panel = () => {
   const [error, setError] = useState<string | null>(null);
   const { token } = useAuth()
 
-  const fetchProfile = async () => {
-    try {
-      const response = await axios.get('/api/auth/profile', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 200) {
-        setProfile(response.data);
-      }
-
-      console.log({ response });
-    } catch (error) {
-      console.error('Error fetching profile:', error);
-      setError(
-        typeof error === 'object' && error !== null && 'message' in error
-          ? String((error as { message?: unknown }).message)
-          : 'Unknown error'
-      );
-    }
-  };
-
   useEffect(() => {
-    fetchProfile();
+    if (!token) {
+      setError('No authentication token found');
+      return;
+    }
+    const fetchData = async () => {
+      setError(null);
+      try {
+        const data = await getProfile(token); // call API from services
+        setProfile(data);
+      } catch (err) {
+        console.error('Error fetching profile:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      }
+    };
+
+    fetchData();
   }, [token]);
 
   return (
