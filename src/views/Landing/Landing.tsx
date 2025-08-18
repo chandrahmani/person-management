@@ -46,9 +46,6 @@ const Landing: FC = () => {
           <Button variant="contained" onClick={() => navigate('/login')}>Login</Button>
         </Toolbar>
       </AppBar>
-
-      {/* Slider */}
-
       <ImageSlider images={images.map((image) => image.img)} />
       <Divider />
     </Box>
