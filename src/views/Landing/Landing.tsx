@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { AppBar, Box, Button, Divider, IconButton, InputBase, Toolbar, Typography } from '@mui/material';
 import ImageSlider from '@/components/ImageSlider/ImageSlider';
+import { useNavigate } from 'react-router';
 
 
 
@@ -17,6 +18,7 @@ const images = [
 ];
 
 const Landing: FC = () => {
+  const navigate = useNavigate()
 
   return (
     <Box sx={{ bgcolor: "background.default", color: "text.primary" }}>
@@ -41,7 +43,7 @@ const Landing: FC = () => {
 
             <InputBase placeholder="Search user, guides…" sx={{ ml: 1, width: 280 }} />
           </Box>
-          <Button variant="contained">Login</Button>
+          <Button variant="contained" onClick={() => navigate('/login')}>Login</Button>
         </Toolbar>
       </AppBar>
 
