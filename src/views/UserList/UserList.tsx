@@ -3,6 +3,7 @@ import { UserProfileType } from '@/types';
 import {
   Alert,
   Container,
+  Grid,
   Paper,
   Table,
   TableBody,

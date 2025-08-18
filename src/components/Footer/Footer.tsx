@@ -1,7 +1,10 @@
 
 import { Box, Button, Container, Grid, InputBase, Stack, Typography} from '@mui/material';
+import { useNavigate } from 'react-router';
 
 function Footer() {
+
+  const navigate = useNavigate()
 	return (
 		// <Box
 		// 	component="footer"
@@ -24,7 +27,7 @@ function Footer() {
         <Container>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={6}>
-              <Typography variant="h6" sx={{ fontWeight: 800 }}>Join our newsletter</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 800 }}>Person Management</Typography>
               <Typography variant="body2" sx={{ opacity: 0.8, mb: 2 }}>Get training tips, product launches, and travel deals.</Typography>
               <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
                 <InputBase placeholder="Your email" sx={{ px: 2, py: 1, border: 1, borderColor: "divider", borderRadius: 2, flex: 1 }} />
@@ -33,15 +36,17 @@ function Footer() {
             </Grid>
             <Grid item xs={12} md={6}>
               <Stack direction="row" justifyContent={{ xs: "flex-start", md: "flex-end" }} spacing={3}>
-                <Button>About</Button>
-                <Button>Careers</Button>
-                <Button>Contact</Button>
+                <Button onClick={() => navigate('/about')}>About</Button>
+                <Button onClick={() => navigate('/contact')}>Contact</Button>
                 <Button>Privacy</Button>
               </Stack>
+              
             </Grid>
           </Grid>
+     
         </Container>
       </Box>
+      
 	);
 }
 

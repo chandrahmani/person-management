@@ -12,6 +12,8 @@ import { ProtectedRoute } from './config/ProtectedRoute'
 import DashboardLayout from './layout/DashboardLayout'
 import Products from './views/NavigatorInfo/NavigatorInfo'
 import Posts from './views/Posts/Posts'
+import Contact from './views/Contact'
+import About from './views/About'
 
 	export default function Root() {
 	return (
@@ -33,9 +35,11 @@ import Posts from './views/Posts/Posts'
 										<Route path='/userlist' element={<UserList />} />
 										<Route path='/products' element={<Products />} />
 										<Route path='/posts' element={<Posts />} />
+									
 										{/* dashboard nested routes */}
 										<Route path='dashboard' element={<DashboardLayout />}>
 											{configureRoute(DASHBOARD_NESTED_ROUTES)}
+											
 										</Route>
 									</Route>
 								
