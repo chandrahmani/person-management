@@ -12,8 +12,6 @@ import { ProtectedRoute } from './config/ProtectedRoute'
 import DashboardLayout from './layout/DashboardLayout'
 import Products from './views/NavigatorInfo/NavigatorInfo'
 import Posts from './views/Posts/Posts'
-import Contact from './views/Contact'
-import About from './views/About'
 
 	export default function Root() {
 	return (
